@@ -22,9 +22,8 @@ const operators = [{id: 'add', value: '+'}, {id: 'subtract', value: '-'}, {id: '
 function App() {
   const [displayedText, setDisplayedText] = useState(0);
 
-  function handleClick(e) {
-    console.log(e.target.firstChild);
-    setDisplayedText(e.targetfirstChild);
+  function handleClick(val) {
+    setDisplayedText(displayedText + val);
   }
 
   return (
@@ -34,20 +33,20 @@ function App() {
       <div className='digits'>
         {digits.map(i => {
           return (
-            <button className='btn' id={i.id} onClick={handleClick}>{i.value}</button>
+            <button className='btn' id={i.id} onClick={() => handleClick(i.value)}>{i.value}</button>
           )
         })}
       </div>
       <div className='operators'>
       {operators.map(i => {
           return (
-            <button className='btn' id={i.id} onClick={handleClick}>{i.value}</button>
+            <button className='btn' id={i.id} onClick={() => handleClick(i.value)}>{i.value}</button>
           )
         })}
       </div>
       <div className='equals-and-clear'>
-        <button className='big-btn' id='clear'>AC</button>
-        <button className='big-btn' id='equals'>=</button>
+        <button className='big-btn' id='clear' onClick={() => setDisplayedText(0)}>AC</button>
+        <button className='big-btn' id='equals' onClick={() => setDisplayedText(eval(displayedText))}>=</button>
       </div>
       </div>
 

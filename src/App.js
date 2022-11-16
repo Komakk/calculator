@@ -20,10 +20,37 @@ const operators = [{id: 'add', value: '+'}, {id: 'subtract', value: '-'}, {id: '
 
 
 function App() {
-  const [displayedText, setDisplayedText] = useState(0);
+  const [status, setStatus] = useState('initial');
+  const [formula, setFormula] = useState('');
+  const [result, setResult] = useState(null);
+
+  const displayedText = status === 'initial'
+                          ? 0
+                          : status === 'typing'
+                              ? formula
+                              : result;
 
   function handleClick(val) {
-    setDisplayedText(displayedText + val);
+    setStatus('typing');
+    //does not work
+    if (formula.startsWith('0') && val === 0) {
+      return;
+    } else if (formula.includes('.') && val === '.') {
+      return;
+    } else {
+      setFormula(formula + val);
+    }
+  }
+
+  function handleEqualsBtnClick() {
+    setStatus('result');
+    setResult(eval(formula));
+    setFormula('');
+  }
+
+  function handleClearBtnClick() {
+    setStatus('initial');
+    setFormula('');
   }
 
   return (
@@ -45,8 +72,8 @@ function App() {
         })}
       </div>
       <div className='equals-and-clear'>
-        <button className='big-btn' id='clear' onClick={() => setDisplayedText(0)}>AC</button>
-        <button className='big-btn' id='equals' onClick={() => setDisplayedText(eval(displayedText))}>=</button>
+        <button className='big-btn' id='clear' onClick={handleClearBtnClick}>AC</button>
+        <button className='big-btn' id='equals' onClick={handleEqualsBtnClick}>=</button>
       </div>
       </div>
 

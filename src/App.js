@@ -33,8 +33,8 @@ function App() {
   function handleClick(val) {
     setStatus('typing');
     //does not work
-    if (formula.startsWith('0') && val === 0) {
-      return;
+    if (formula.startsWith('0') && Number.isInteger(val)) {
+      setFormula('' + val);
     } else if (formula.includes('.') && val === '.') {
       return;
     } else {

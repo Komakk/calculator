@@ -20,21 +20,18 @@ const operators = [{id: 'add', value: '+'}, {id: 'subtract', value: '-'}, {id: '
 
 
 function App() {
-  const [status, setStatus] = useState('initial');
-  const [formula, setFormula] = useState('');
+  const [status, setStatus] = useState('typing');
+  const [formula, setFormula] = useState('0');
   const [result, setResult] = useState(null);
 
-  const displayedText = status === 'initial'
-                          ? 0
-                          : status === 'typing'
-                              ? formula
-                              : result;
+  const displayedText = status === 'typing' ? formula : result;
 
   function handleClick(val) {
     setStatus('typing');
     //does not work
-    if (formula.startsWith('0') && Number.isInteger(val)) {
+    if (formula.startsWith('0') && Number.isInteger(val) && formula.length < 2) {
       setFormula('' + val);
+      
     } else if (formula.includes('.') && val === '.') {
       return;
     } else {
@@ -45,12 +42,12 @@ function App() {
   function handleEqualsBtnClick() {
     setStatus('result');
     setResult(eval(formula));
-    setFormula('');
+    setFormula('0');
   }
 
   function handleClearBtnClick() {
-    setStatus('initial');
-    setFormula('');
+    setStatus('typing');
+    setFormula('0');
   }
 
   return (
